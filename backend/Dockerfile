@@ -22,6 +22,7 @@ COPY requirements.txt /app/
 COPY setup.py /app/
 COPY template.py /app/
 COPY README.md /app/
+COPY test.py /app/
 
 
 # Install Python dependencies
