@@ -14,15 +14,15 @@ RUN apt-get update -y && apt-get install -y \
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY src/ /app/src/
-COPY config/ /app/config/
-COPY app.py /app/
-COPY main.py /app/
-COPY requirements.txt /app/
-COPY setup.py /app/
-COPY template.py /app/
-COPY README.md /app/
-COPY test.py /app/
+COPY backend/src/ /app/src/
+COPY backend/config/ /app/config/
+COPY backend/app.py /app/
+COPY backend/main.py /app/
+COPY backend/requirements.txt /app/
+COPY backend/setup.py /app/
+COPY backend/template.py /app/
+COPY backend/README.md /app/
+COPY backend/test.py /app/
 
 
 # Install Python dependencies
