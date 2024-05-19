@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 
 # MySQL configurations
-app.config['MYSQL_HOST'] = 'localhost'  
+app.config['MYSQL_HOST'] = 'mysql'  
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_PASSWORD'] = 'Deepa@1997'
