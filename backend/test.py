@@ -22,10 +22,10 @@ class APITestCase(unittest.TestCase):
             try:
                 with self.client:
                     response = self.client.post('/register-user', json={
-                        'name': 'Gopal Sanket',
+                        'name': 'Gautam',
                         'age': 30,
                         'sex': 'Male',
-                        'email': '4558@example.com',
+                        'email': 'gautam@example.com',
                         'password': '1234'
                     })
                     data = json.loads(response.data)
