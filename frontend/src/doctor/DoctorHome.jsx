@@ -7,11 +7,16 @@ function DoctorHome() {
     const [userNames, setUserNames] = useState([]);
     const [error, setError] = useState(null);
     const navigate = useNavigate(); // Initialize useNavigate hook
+    const token = localStorage.getItem('token'); 
 
     useEffect(() => {
         const fetchPredictionData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/prediction_data');
+                const response = await axios.get('/prediction_data',{
+                headers: {
+                    'Authorization': `${token}`  // Include the token in the Authorization header
+                }}
+                );
                 setUserNames(response.data);
                 setError(null);
             } catch (error) {
@@ -25,6 +30,18 @@ function DoctorHome() {
     const handleViewCase = (caseId) => {
         // Navigate to the next page with user ID as parameter
         navigate(`/view-case/${caseId}`);
+    };
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('/logout', {token}
+              );
+            localStorage.removeItem('token');
+            
+            navigate('/');  
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
     };
 
     return (
@@ -48,6 +65,12 @@ function DoctorHome() {
                     </div>
                 ))}
             </ul>
+            
+        <button onClick={handleLogout} style={styles.button}>
+            Logout
+        </button>
+        
+
         </div>
     );
 }

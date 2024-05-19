@@ -2,12 +2,11 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router,Route, Routes } from 'react-router-dom';
 import UserRegistrationForm from './user/userRegistration';
-import DoctorRegistrationForm from './doctor/doctorRegistration';
 import LoginForm from './Login/login';
-import UploadImageForm from './user/UploadImage';
 import UserHomePage from './user/UserHomePage';
 import DoctorHome from './doctor/DoctorHome';
 import ViewCase from './doctor/ViewCase';
+import DoctorSuggestionsPage from './user/DoctorSuggesstionsPage';
 function App() {
   return (
     <div className="App">
@@ -19,7 +18,8 @@ function App() {
       <Route exact path='/user/patient_home' element={<UserHomePage/>} />
       <Route exact path='/user/' element={<UserRegistrationForm/>} />
       <Route exact path='/user/registration' element={<UserRegistrationForm/>} />
-      <Route exact path='/doctor-registration' element={<DoctorRegistrationForm/>} />
+      <Route exact path='/user/doctor-suggestions' element={<DoctorSuggestionsPage/>} />
+      
       </Routes>
       </Router>
     </div>

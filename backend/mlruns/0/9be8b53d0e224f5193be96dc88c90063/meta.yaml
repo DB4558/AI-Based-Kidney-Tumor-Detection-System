@@ -1,0 +1,15 @@
+artifact_uri: file:///home/deep4558/Desktop/ML-chestcancer-detection/mlruns/0/9be8b53d0e224f5193be96dc88c90063/artifacts
+end_time: 1713703086301
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9be8b53d0e224f5193be96dc88c90063
+run_name: bright-lark-228
+run_uuid: 9be8b53d0e224f5193be96dc88c90063
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1713703080934
+status: 3
+tags: []
+user_id: deep4558

@@ -1,0 +1,15 @@
+artifact_uri: file:///home/deep4558/Desktop/ML-chestcancer-detection/mlruns/0/74ab94d252be4bda870bc9dd2d853a2b/artifacts
+end_time: 1713719729586
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 74ab94d252be4bda870bc9dd2d853a2b
+run_name: caring-goose-300
+run_uuid: 74ab94d252be4bda870bc9dd2d853a2b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1713719726057
+status: 3
+tags: []
+user_id: deep4558

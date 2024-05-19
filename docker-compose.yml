@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: react:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - apps-network
+
+  backend:
+    image: flask-app:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - /home/deep4558/Desktop/SPE_Major/Model/model.h5:/app/model/model.h5
+      - /home/deep4558/Desktop/SPE_Major/SPE_kidneyDetection/backend/logs/app.log:/app/app.log
+    depends_on:
+      - mysql
+    networks:
+      - apps-network
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Deepa@1997
+      MYSQL_DATABASE: kidney
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "-pDeepa@1997", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - apps-network
+      
+
+volumes:
+  mysql-data:
+    driver: local
+
+networks:
+  apps-network:
+    driver: bridge
+

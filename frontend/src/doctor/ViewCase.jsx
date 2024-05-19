@@ -8,16 +8,21 @@ function ViewCase() {
     const [error, setError] = useState(null);
     const { caseId } = useParams();
     const [imageSrc, setImageSrc] = useState(null);
+    const [reload, setReload] = useState(false);
 
     const [doctorPrediction, setDoctorPrediction] = useState('');
+    const token = localStorage.getItem('token'); 
     const handleSaveDoctorPrediction = async () => {
         try {
             // Send a POST request to the backend with the new doctor prediction
-            await axios.post(`http://localhost:5000/save_doctor_prediction/${caseId}`, { doctorPrediction });
+            await axios.post(`/save_doctor_prediction/${caseId}`, { doctorPrediction }, { headers: {
+                'Authorization': `${token}`
+            }});
             
             // Reset the doctorPrediction state variable
             setDoctorPrediction('');
             setError(null);
+            setReload(!reload);
              
             // Optionally, you can show a success message or perform any other action upon successful saving
             alert('Doctor prediction saved successfully');
@@ -28,10 +33,18 @@ function ViewCase() {
     useEffect(() => {
         const fetchCaseData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/case/${caseId}`);
+                const response = await axios.get(`/case/${caseId}`,{
+                    headers: {
+                        'Authorization': `${token}`  
+                    }
+                });
                 setCaseData(response.data);
                 console.log(response.data)
-                const imageResponse = await axios.get(`http://localhost:5000/image/${caseId}`, { responseType: 'blob' });
+                const imageResponse = await axios.get(`/image/${caseId}`, {  headers: {
+                    'Authorization': `${token}`  
+                }, responseType: 'blob' }
+        
+            );
                 const imageUrl = URL.createObjectURL(imageResponse.data);
                 setImageSrc(imageUrl);
 
@@ -42,7 +55,7 @@ function ViewCase() {
         };
 
         fetchCaseData();
-    }, [caseId]);
+    }, [caseId,reload]);
 
     return (
         <div>

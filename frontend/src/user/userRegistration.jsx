@@ -1,6 +1,7 @@
 // UserRegistrationForm.js
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import './UserRegistrationForm.css'; // Import CSS file
 
 const UserRegistrationForm = () => {
@@ -11,6 +12,7 @@ const UserRegistrationForm = () => {
         email: '',
         password: ''
     });
+    const navigate = useNavigate(); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,7 +22,7 @@ const UserRegistrationForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Send user registration data to backend
-        fetch('http://localhost:5000/register-user', {
+        fetch('/register-user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,10 +32,19 @@ const UserRegistrationForm = () => {
         .then(response => {
             if (response.ok) {
                 console.log('User registered successfully');
-                // Optionally, redirect to a different page or show a success message
+                setUserData({
+                    name: '',
+                    age: '',
+                    sex: '',
+                    email: '',
+                    password: ''
+                });
+                // Redirect to login page
+                navigate('/'); 
+                
             } else {
                 console.error('Failed to register user');
-                // Handle error case
+                
             }
         })
         .catch(error => {

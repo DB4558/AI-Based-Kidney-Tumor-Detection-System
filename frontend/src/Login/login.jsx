@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -11,11 +12,21 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/login', { email, password });
-      const { role, redirect_url, userId } = response.data; // Assuming you receive userId from the backend
-      // Redirect based on the role
-      if (role === 'user' || role === 'doctor') {
-        navigate(redirect_url, { state: { userId } }); // Pass userId as state to the next page
+      const response = await axios.post('/login', { email, password });
+      //const { role, redirect_url, userId } = response.data; 
+      const { token, role, userId } = response.data;
+      console.log(response.data);
+      // Store the token in local storage or session storage
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+      localStorage.setItem('userId', userId);
+      console.log(userId);
+    
+      if (role === 'user') {
+        navigate('/user/patient_home', { state: { userId } }); 
+      }
+      else{
+        navigate('/doctor/doctor_home', { state: { userId } }); 
       }
     } catch (err) {
       setError('Invalid email or password');
@@ -37,9 +48,14 @@ const LoginForm = () => {
         </div>
         {error && <p style={{ color: 'red', marginBottom: '15px' }}>{error}</p>}
         <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer' }}>Login</button>
+        {/* Add a Link for users to navigate to the registration page */}
+        <p style={{ marginTop: '20px' }}>
+          Are you a user? Not registered? <Link to="/user/registration" style={{ color: '#007bff', textDecoration: 'none' }}>Kindly register</Link>
+        </p>
       </form>
     </div>
   );
 };
 
 export default LoginForm;
+

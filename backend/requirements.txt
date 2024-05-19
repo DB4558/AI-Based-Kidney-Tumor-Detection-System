@@ -1,0 +1,25 @@
+tensorflow
+pandas 
+dvc
+mlflow
+notebook
+numpy
+matplotlib
+seaborn
+python-box
+pyYAML
+tqdm
+ensure
+joblib
+types-PyYAML
+scipy
+PyJWT
+pymysql
+Flask
+mysql-client
+mysql-connector-python
+Flask-Cors
+Flask-MySQLdb
+Flask-Testing
+gdown
+-e .
