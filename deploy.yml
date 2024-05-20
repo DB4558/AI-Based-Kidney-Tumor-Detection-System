@@ -1,0 +1,47 @@
+---
+- name: Restart Docker Containers Using Docker Compose
+  hosts: localhost
+  remote_user: deepa
+  become: false
+  tasks:
+    - name: Pull React Docker Image
+      docker_image:
+        name: "db4558/react"
+        source: pull
+      register: docker_pull_react
+
+    - name: Pull Flask Docker Image
+      docker_image:
+        name: "db4558/flask-app"
+        source: pull
+      register: docker_pull_flask
+
+    - name: Display Docker Pull Result for React
+      debug:
+        var: docker_pull_react
+
+    - name: Display Docker Pull Result for Flask
+      debug:
+        var: docker_pull_flask
+
+    - name: Ensure Docker Service is Running
+      service:
+        name: docker
+        state: started
+
+    - name: Stop and Remove Docker Compose Services
+      docker_compose:
+        state: absent
+
+    - name: Start Docker Compose Services
+      docker_compose:
+        state: present
+        restarted: yes
+
+    - name: Verify Docker Compose Services
+      command: docker-compose ps
+      register: compose_services
+
+    - name: Display Docker Compose Services Status
+      debug:
+        var: compose_services.stdout_lines
