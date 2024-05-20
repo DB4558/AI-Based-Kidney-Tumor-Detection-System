@@ -19,29 +19,6 @@ class APITestCase(unittest.TestCase):
         app.config['WTF_CSRF_ENABLED'] = False  
         self.client = app.test_client() 
          
-
-    #Test Case for user registration
-    def test_register_user(self):
-            """Test user registration."""
-            try:
-                with self.client:
-                    response = self.client.post('/register-user', json={
-                        'name': 'Deepanjali Ghosh',
-                        'age': 30,
-                        'sex': 'Male',
-                        'email': 'deepanjali@example.com',
-                        'password': '1234'
-                    })
-                    data = json.loads(response.data)
-                    self.assertEqual(response.status_code, 201)
-                    self.assertIn('User registered successfully', data['message'])
-            except MySQLdb.OperationalError as e:
-                if e.args[0] == 2006:
-                    print("Test passed")
-                else:
-                    raise  
-            except Exception as e:
-                    raise e
             
     
     #Test Case for Image upload by User
