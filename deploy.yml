@@ -31,17 +31,13 @@
 
     - name: Stop and Remove Docker Compose Services
       docker_compose:
+        project_src: "./docker-compose.yml"
         state: absent
 
     - name: Start Docker Compose Services
       docker_compose:
+        project_src: "./docker-compose.yml"
         state: present
         restarted: yes
 
-    - name: Verify Docker Compose Services
-      command: docker-compose ps
-      register: compose_services
-
-    - name: Display Docker Compose Services Status
-      debug:
-        var: compose_services.stdout_lines
+  
