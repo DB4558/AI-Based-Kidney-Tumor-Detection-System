@@ -31,7 +31,7 @@ services:
       MYSQL_DATABASE: kidney
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - mysql-data:/var/lib/mysql
+      - /home/deep4558/Desktop/SPE_Major/Volume/mysql-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "-pDeepa@1997", "ping"]
       interval: 10s
@@ -43,7 +43,7 @@ services:
       
 
 volumes:
-  mysql-data:
+  /home/deep4558/Desktop/SPE_Major/Volume/mysql-data:
     driver: local
 
 networks:
