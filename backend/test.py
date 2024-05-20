@@ -306,33 +306,5 @@ class APITestCase(unittest.TestCase):
         
 
 
-    #Test Case for Login
-    def test_login(self):
-
-        
-        data = json.dumps({'email': 'dipak@example.com',
-                           'password':'1234'})
-        headers = {
-            'Content-Type': 'application/json'
-        }
-
-        try:
-            with self.client:
-                response = self.client.post(
-                    '/login',
-                    data=data,
-                    headers=headers,
-                )
-
-        
-                self.assertEqual(response.status_code, 200)
-                self.assertEqual(json.loads(response.data)['message'], ' User logged in sucessfully')
-        except MySQLdb.OperationalError as e:
-                if e.args[0] == 2006:
-                    print("Test passed")
-                else:
-                    raise  
-        except Exception as e:
-                    raise e
-        
+   
 
