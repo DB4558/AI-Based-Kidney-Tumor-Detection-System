@@ -24,6 +24,15 @@
       debug:
         var: docker_pull_flask
 
+    - name: Print working directory
+      command: pwd
+      register: pwd
+
+    - name: Display working directory
+      debug:
+        var: pwd.stdout
+
+
     - name: Ensure Docker Service is Running
       service:
         name: docker
