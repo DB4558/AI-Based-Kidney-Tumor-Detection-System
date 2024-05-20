@@ -40,12 +40,12 @@
 
     - name: Stop and Remove Docker Compose Services
       docker_compose:
-        project_src: "./docker-compose.yml"
+        project_src: "{{ playbook_dir }}"
         state: absent
 
     - name: Start Docker Compose Services
       docker_compose:
-        project_src: "./docker-compose.yml"
+        project_src: "{{ playbook_dir }}"
         state: present
         restarted: yes
 
