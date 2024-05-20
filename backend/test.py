@@ -241,7 +241,7 @@ class APITestCase(unittest.TestCase):
         try:
             with self.client:
                 response = self.client.get(
-                    '/case/10',
+                    '/case/1',
                     headers=headers,
                 )
 
@@ -277,7 +277,7 @@ class APITestCase(unittest.TestCase):
         try:
             with self.client:
                 response = self.client.post(
-                    '/save_doctor_prediction/10',
+                    '/save_doctor_prediction/1',
                     data=data,
                     headers=headers,
                 )
@@ -313,7 +313,7 @@ class APITestCase(unittest.TestCase):
         try:
             with self.client:
                 response = self.client.get(
-                    '/image/10',
+                    '/image/1',
                     headers=headers,
                 )
 
