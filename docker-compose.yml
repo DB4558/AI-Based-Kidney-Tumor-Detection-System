@@ -42,10 +42,6 @@ services:
       - apps-network
       
 
-volumes:
-  /home/deep4558/Desktop/SPE_Major/Volume/mysql-data:
-    driver: local
-
 networks:
   apps-network:
     driver: bridge
