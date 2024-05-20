@@ -1,0 +1,133 @@
+pipeline{
+    agent any
+    stages{
+        stage("Fetch Code")
+        {
+            steps{
+                git url: "https://github.com/DB4558/Kidney_Tumor_Detection_MlOps_Devops.git" ,branch:"main"
+            }
+        
+        }
+        
+    stage("Build Frontend Image")
+        {
+            steps{
+                sh "docker build -t react:latest -f ./frontend/Dockerfile ."
+            }
+        }
+      stage("Trivy Frontend Image Scan") {
+            steps {
+                script {
+                    
+                    def IMAGE_NAME = "react"
+                    
+                    
+                    sh "trivy image --severity HIGH,CRITICAL --no-progress --format json $IMAGE_NAME > trivy_results.json"
+                }   
+            }
+        }
+        stage("push Frontend Image to Dockerhub")
+        {
+            steps{
+                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerpassword",usernameVariable:"dockerusername")]){
+                    
+                    sh "docker login -u ${env.dockerusername} -p ${env.dockerpassword}"
+                    sh "docker tag react:latest ${env.dockerusername}/react"
+                    sh "docker push ${env.dockerusername}/react"
+                    
+                }
+            }
+            
+        }
+        stage("Build Backend Image")
+        {
+            steps{
+                sh "docker build -t flask-app:latest -f ./backend/Dockerfile ."
+            }
+        }
+        stage("Trivy Backend Image Scan") {
+            steps {
+                script {
+                    
+                    def IMAGE_NAME = "flask-app"
+                    
+                    
+                    sh "trivy image --severity HIGH,CRITICAL --no-progress --format json $IMAGE_NAME > trivy_results.json"
+                }   
+            }
+        }
+        stage("push Backend Image to Dockerhub")
+        {
+            steps{
+                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerpassword",usernameVariable:"dockerusername")]){
+                    
+                    sh "docker login -u ${env.dockerusername} -p ${env.dockerpassword}"
+                    sh "docker tag flask-app:latest ${env.dockerusername}/flask-app"
+                    sh "docker push ${env.dockerusername}/flask-app"
+                    
+                }
+            }
+            
+        }
+        stage('Testing') {
+            steps {
+                script {
+                    sh 'docker-compose down && docker-compose up --build -d'
+                    
+                    sh 'sleep 40'
+                
+                    sh 'docker-compose exec -T backend python -m unittest test.py'
+                }
+            }
+        }
+        stage("Docker Compose")
+        {
+            steps{
+               sh "docker-compose down && docker-compose up -d"
+            }
+        }
+        stage("deploy")
+        {
+            steps{
+                script {
+                    ansiblePlaybook(
+                        playbook: 'deploy.yml',
+                        inventory: 'inventory'
+                        )
+                }
+            }
+        }
+}
+post {
+
+        failure{
+             emailext (
+              to: 'deepanjalighosh2017@gmail.com',
+              subject: "Build failed",
+              body: "Prediction app failed"
+      
+            )
+               
+        }
+      success{
+             emailext (
+              to: 'deepanjalighosh2017@gmail.com',
+              subject: "Build success",
+              body: "Prediction app success"
+      
+                )
+               
+        }
+     changed{
+             emailext (
+              to: 'deepanjalighosh2017@gmail.com',
+              subject: "Build status changed",
+              body: "Prediction app build status changed"
+      
+                )
+               
+        }
+    }
+   
+    
+}
