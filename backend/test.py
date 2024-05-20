@@ -333,7 +333,7 @@ class APITestCase(unittest.TestCase):
     def test_login(self):
 
         
-        data = json.dumps({'email': 'dona@example.com',
+        data = json.dumps({'email': 'dipak@example.com',
                            'password':'1234'})
         headers = {
             'Content-Type': 'application/json'
