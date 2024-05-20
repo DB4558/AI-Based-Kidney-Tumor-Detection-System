@@ -26,19 +26,12 @@ app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'mysql'  
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PORT'] = 3306,
-app.config['TESTING'] = False  # Add this line
+app.config['TESTING'] = True  # Add this line
 app.config['WTF_CSRF_ENABLED'] = False  # Add this line
 app.config['MYSQL_PASSWORD'] = 'Deepa@1997'
 app.config['MYSQL_DB'] = 'kidney'
 
 app.config['SECRET_KEY'] = 'kidney'
-
-if app.config['TESTING']:
-    app.config['MYSQL_HOST'] = 'mysql'  
-    app.config['MYSQL_USER'] = 'root'
-    app.config['MYSQL_PORT'] = 3306
-    app.config['MYSQL_PASSWORD'] = 'Deepa@1997'
-    app.config['MYSQL_DB'] = 'kidney_test'
 
 
 
