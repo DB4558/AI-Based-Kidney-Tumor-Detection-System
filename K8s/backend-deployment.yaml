@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: db4558/flask-app-kube
+        workingDir: /app 
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DATABASE_HOST
+          value: mysql
+        - name: DATABASE_PORT
+          value: "3306"
+        - name: DATABASE_USER
+          value: root
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: root-password
+        - name: DATABASE_NAME
+          value: kidney_test
+        volumeMounts:
+        - name: log-data
+          mountPath: /app/logs
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      volumes:
+      - name: log-data
+        hostPath:
+          path: /home/deep4558/Desktop/SPE_Major/SPE_kidneyDetection/backend/logs
+

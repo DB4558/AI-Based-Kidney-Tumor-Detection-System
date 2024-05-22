@@ -13,7 +13,8 @@ class PredictionPipeline:
     
     def predict(self):
         # load model
-        model = load_model(os.path.join("model", "model.h5"),compile=False)
+        model_path="/app/model/model.h5"
+        model = load_model(model_path,compile=False)
         model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
         imagename = self.filename
         test_image = image.load_img(imagename, target_size = (224,224))

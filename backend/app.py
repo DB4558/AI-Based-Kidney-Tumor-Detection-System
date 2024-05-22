@@ -50,7 +50,7 @@ mysql = MySQL(app)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Set up the handler to append to a single log file
-handler = logging.FileHandler('app.log')
+handler = logging.FileHandler('/app/logs/app.log')
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 
