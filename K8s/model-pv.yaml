@@ -9,4 +9,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/home/deep4558/Desktop/SPE_Major/SPE_kidneyDetection/backend/model"
+    path: "/home/deep4558/Desktop/SPE_Major/Model"
