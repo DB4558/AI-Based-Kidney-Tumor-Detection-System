@@ -48,5 +48,5 @@ spec:
           path: /home/deep4558/Desktop/SPE_Major/SPE_kidneyDetection/backend/logs
       - name: model-volume
         persistentVolumeClaim:
-          claimName: mode
+          claimName: model-pvc
 
