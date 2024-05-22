@@ -5,13 +5,13 @@ FROM node:16-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY /frontend/package*.json ./
+COPY frontend/package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the application
-COPY /frontend ./
+COPY frontend/ ./
 
 # Expose the port the app runs on
 EXPOSE 3000
