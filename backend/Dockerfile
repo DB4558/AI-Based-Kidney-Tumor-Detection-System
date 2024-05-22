@@ -23,7 +23,6 @@ COPY backend/setup.py /app/
 COPY backend/template.py /app/
 COPY backend/README.md /app/
 COPY backend/test.py /app/
-COPY backend/model/ /app/model
 
 
 
