@@ -1,0 +1,141 @@
+pipeline{
+    agent any
+    stages{
+        stage("Fetch Code")
+        {
+            steps{
+                git url: "https://github.com/DB4558/Kubernetes_project.git" ,branch:"main"
+            }
+        
+        }
+        
+    stage("Build Frontend Image")
+        {
+            steps{
+                sh "docker build -t react:latest -f ./frontend/Dockerfile ."
+            }
+        }
+      stage("Trivy Frontend Image Scan") {
+            steps {
+                script {
+                    
+                    def IMAGE_NAME = "react"
+                    
+                    
+                    sh "trivy image --severity HIGH,CRITICAL --no-progress --format json $IMAGE_NAME > trivy_results.json"
+                }   
+            }
+        }
+        stage("push Frontend Image to Dockerhub")
+        {
+            steps{
+                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerpassword",usernameVariable:"dockerusername")]){
+                    
+                    sh "docker login -u ${env.dockerusername} -p ${env.dockerpassword}"
+                    sh "docker tag react:latest ${env.dockerusername}/react"
+                    sh "docker push ${env.dockerusername}/react"
+                    
+                }
+            }
+            
+        }
+        stage("Build Backend Image")
+        {
+            steps{
+                sh "docker build -t flask-app-kub:latest -f ./backend/Dockerfile ."
+            }
+        }
+        stage("Trivy Backend Image Scan") {
+            steps {
+                script {
+                    
+                    def IMAGE_NAME = "flask-app"
+                    
+                    
+                    sh "trivy image --severity HIGH,CRITICAL --no-progress --format json $IMAGE_NAME > trivy_results.json"
+                }   
+            }
+        }
+        stage("push Backend Image to Dockerhub")
+        {
+            steps{
+                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerpassword",usernameVariable:"dockerusername")]){
+                    
+                    sh "docker login -u ${env.dockerusername} -p ${env.dockerpassword}"
+                    sh "docker tag flask-app-kub:latest ${env.dockerusername}/flask-app-kube"
+                    sh "docker push ${env.dockerusername}/flask-app-kube"
+                    
+                }
+            }
+            
+        }
+        stage('Testing') {
+            steps {
+                script {
+                    sh 'docker-compose down && docker-compose up --build -d'
+                    
+                    sh 'sleep 40'
+                
+                    sh 'docker-compose exec -T backend python -m unittest test.py'
+                }
+            }
+        }
+        stage("Container clean")
+        {
+            steps{
+               sh "docker-compose down  -d"
+            }
+        }
+        stage("Deploy to Kubernetes") {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: 'minikube', contextName: '', credentialsId: 'k8-cred', namespace: 'default', restrictKubeConfigAccess: false, serverUrl: 'https://192.168.49.2:8443') {
+                    script {
+                        sh ' kubectl apply -f  K8s/mysql-secret.yaml'
+                        sh ' kubectl apply -f  K8s/mysql-configmap.yaml'
+                        sh ' kubectl apply -f  K8s/mysql-pvc.yaml'
+                        sh ' kubectl apply -f  K8s/mysql-deployment.yaml'
+                        sh ' kubectl apply -f  K8s/mysql-service.yaml'
+                        sh ' kubectl apply -f  K8s/backend-deployment.yaml'
+                        sh ' kubectl apply -f  K8s/backend-service.yaml'
+                        sh ' kubectl apply -f  K8s/backend-hpa.yaml'
+                        sh ' kubectl apply -f  K8s/frontend-deployment.yaml'
+                        sh ' kubectl apply -f  K8s/frontend-service.yaml'
+                    }
+                }
+            }
+        }
+        
+}
+post {
+
+        failure{
+             emailext (
+              to: 'deepanjalighosh2017@gmail.com',
+              subject: "Build failed",
+              body: "Prediction app failed"
+      
+            )
+               
+        }
+      success{
+             emailext (
+              to: 'deepanjalighosh2017@gmail.com',
+              subject: "Build success",
+              body: "Prediction app success"
+      
+                )
+               
+        }
+     changed{
+             emailext (
+              to: 'deepanjalighosh2017@gmail.com',
+              subject: "Build status changed",
+              body: "Prediction app build status changed"
+      
+                )
+               
+        }
+    }
+   
+    
+}
