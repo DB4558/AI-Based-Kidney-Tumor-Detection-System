@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Card from '../Card';
+import DoctorNavbar from './DoctorNavbar';
 
 function ViewCase() {
     const [caseData, setCaseData] = useState(null);
@@ -59,6 +60,7 @@ function ViewCase() {
 
     return (
         <div>
+            <DoctorNavbar/>
             {error && <div>Error: {error}</div>}
             {caseData && (
                 <div>
