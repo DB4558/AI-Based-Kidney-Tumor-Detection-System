@@ -6,6 +6,7 @@ import LoginForm from './Login/login';
 import UserHomePage from './user/UserHomePage';
 import DoctorHome from './doctor/DoctorHome';
 import ViewCase from './doctor/ViewCase';
+import HomePage from './user/HomePage';
 import DoctorSuggestionsPage from './user/DoctorSuggesstionsPage';
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Router>
       <Routes>
       <Route exact path='/' element={<LoginForm/>} />
+      <Route exact path='/user/home' element={<HomePage/>} />
       <Route path="/view-case/:caseId" element={<ViewCase />} />
       <Route exact path='/doctor/doctor_home' element={<DoctorHome/>} />
       <Route exact path='/user/patient_home' element={<UserHomePage/>} />
