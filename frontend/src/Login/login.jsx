@@ -23,7 +23,7 @@ const LoginForm = () => {
       console.log(userId);
     
       if (role === 'user') {
-        navigate('/user/patient_home', { state: { userId } }); 
+        navigate('/user/home', { state: { userId } }); 
       }
       else{
         navigate('/doctor/doctor_home', { state: { userId } }); 
