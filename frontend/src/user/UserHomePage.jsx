@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '../Card'; // Import the Card component
+import UserNavbar from './UserNavbar';
+
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 
@@ -133,6 +135,7 @@ function UserHomePage() {
 
     return (
         <div>
+             <UserNavbar></UserNavbar>
             <div style={styles.Detailscontainer}>
                 <h2 style={styles.heading}>User Details</h2>
                 <Card>
