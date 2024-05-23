@@ -4,7 +4,7 @@ pipeline{
         stage("Fetch Code")
         {
             steps{
-                git url: "https://github.com/DB4558/Kubernetes_project.git" ,branch:"main"
+                git url: "https://github.com/DB4558/Kubenetes_project_MLOPs.git" ,branch:"main"
             }
         
         }
