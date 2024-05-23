@@ -4,6 +4,8 @@ metadata:
   name: frontend-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/limit-connections: "20" 
+    nginx.ingress.kubernetes.io/limit-rps: "10"
 spec:
   ingressClassName: nginx
   rules:
