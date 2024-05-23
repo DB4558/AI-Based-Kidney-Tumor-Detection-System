@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '../Card';
 import { useNavigate } from 'react-router-dom'; 
+import DoctorNavbar from './DoctorNavbar';
 
 function DoctorHome() {
     const [userNames, setUserNames] = useState([]);
@@ -45,6 +46,8 @@ function DoctorHome() {
     };
 
     return (
+        <div>
+             <DoctorNavbar/>
         <div style={styles.container}>
             <h2>Patient Data List</h2>
             {error && <div>Error: {error}</div>}
@@ -70,7 +73,7 @@ function DoctorHome() {
             Logout
         </button>
         
-
+        </div>
         </div>
     );
 }
