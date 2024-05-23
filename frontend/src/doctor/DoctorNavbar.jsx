@@ -86,8 +86,4 @@ const styles = {
   
 };
 
-// Add hover effect to sidenavItem
-styles.sidenavItem[':hover'] = {
-    backgroundColor: '#007bff',
-    color: 'white',
-};
+
