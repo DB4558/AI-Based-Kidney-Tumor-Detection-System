@@ -108,6 +108,10 @@ const styles = {
         fontSize: '1.2rem',
         transition: 'background-color 0.3s, color 0.3s',
         cursor: 'pointer',
+         ':hover': {
+            backgroundColor: '#007bff',
+            color: 'white'
+          }
     },
     navButton: {
         fontWeight: 'bold',
@@ -154,8 +158,3 @@ const styles = {
     },
 };
 
-// Add hover effect to sidenavItem
-styles.sidenavItem[':hover'] = {
-    backgroundColor: '#007bff',
-    color: 'white',
-};
