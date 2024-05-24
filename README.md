@@ -70,8 +70,9 @@ python app.py
    git clone https://github.com/DB4558/kidney-tumor-detection.git
    cd kidney-tumor-detection
 2.**For running Backend**
-```bash
-python app.py
-3. **To run frontend**
+  ```bash
+  python app.py
+
+3.**For running Frontend**
 ```bash
 npm start
