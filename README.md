@@ -35,8 +35,8 @@ This project is an AI-based system for detecting kidney tumors from CT scans. It
     app.py
 
 How to run?
-STEPS:
-Clone the repository
+
+STEPS:Clone the repository
 
 STEP 01- Create a conda environment after opening the repository
 
@@ -67,7 +67,7 @@ python app.py
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourgithubrepo/kidney-tumor-detection.git
+   git clone https://github.com/DB4558/kidney-tumor-detection.git
    cd kidney-tumor-detection
 2.**For running Backend**
 ```bash
